@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Simlple Photo Editor</title>
+  
+  <link rel="stylesheet" href="style.css">
+  <!-- google fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Edu+NSW+ACT+Foundation:wght@400;500;700&family=Poppins:ital,wght@0,500;1,600;1,700&family=Roboto:wght@400;500;700&family=Rubik+Iso&display=swap" rel="stylesheet">
+   <!-- font awesome  -->
+  <script src="https://kit.fontawesome.com/a2fa536777.js" crossorigin="anonymous">
+  </script>
+</head>
+
+<body>
+
+ <main>
+    <div class="whole-container">
+        <!-- start -->
+       <div class="top-container">
+         
+          <div class="image-container">
+              <!-- <h1 id="image-name-display">User-image</h1> -->
+              <img src="https://unsplash.it/4000/4000" alt="" id="user-image">
+          </div>
+          <form action="">
+
+         <div class="options-container">
+          <h2>Options</h2>
+           <div class="filters-container">
+             <label for="" class="label">Filters</label>
+             <div class="grid">
+                <input type="button" value="Grayscale" class="button" id="grayscale-btn">
+                <input type="button" value="Saturate" class="button" id="saturate-btn">
+                <input type="button" value="Contrast" class="button" id="contrast-btn">
+                <input type="button" value="Brightness" class="button" id="brightness-btn">
+             </div>
+             <div class="range-container">
+              <label for="range-value-display" class="range-value-display label">Range</label>
+              <input type="range" id="value-range" min="0" max="100" value="10">
+            </div>
+           </div>
+
+          
+
+           
+           <div class="rotate-container">
+             <label for="" class="label">Rotatations</label>
+             <div class="grid">
+                <input type="button" class="button" value="0deg" id="normal-rotate">
+                <input type="button" class="button" value="90deg" id="half-rotate">
+                <input type="button" class="button"  value="45deg" id="45deg-rotate">
+                <input type="button" class="button"  value="180deg" id="upside-down">
+              </div>
+           </div>
+           
+          <button class="reset-btn" type="reset">Reset Styles</button>
+         </div>
+        </form>
+         
+       </div>
+       <!-- end -->
+       
+       <!-- start -->
+       <div class="bottom-container">
+         <label for="image-input" id="image-input-label"><i class="fa-solid fa-cloud-arrow-up"></i> Upload Image</label>
+         <input type="file" id="image-input">
+         <a href="" id="download-link">Download-Image <i class="fa-solid fa-cloud-arrow-down"></i></a>
+       </div>
+       <!-- end -->
+    </div>
+ </main>
+
+  <script src="main.js"></script>
+</body>
+</html>
