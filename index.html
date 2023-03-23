@@ -26,7 +26,7 @@
          
           <div class="image-container">
               <!-- <h1 id="image-name-display">User-image</h1> -->
-              <img src="https://unsplash.it/4100/4000" alt="" id="user-image">
+              <img src="user.png" alt="" id="user-image">
           </div>
           <form action="">
 
@@ -35,13 +35,16 @@
            <div class="filters-container">
              <label for="" class="label">Filters</label>
              <div class="grid">
-                <input type="button" value="Grayscale" class="button" id="grayscale-btn">
-                <input type="button" value="Saturate" class="button" id="saturate-btn">
-                <input type="button" value="Contrast" class="button" id="contrast-btn">
-                <input type="button" value="Brightness" class="button" id="brightness-btn">
+                <button type="button" value="0" class="button" id="grayscale-btn">Grayscale</button>
+                <button type="button" value="0" class="button" id="saturate-btn">Saturate</button>
+                <button type="button" value="100" class="button" id="opacity-btn">Opacity</button>
+                <button type="button" value="0" class="button" id="blur-btn">Blur</button>
+                <button type="button" value="100" class="button" id="contrast-btn">Contrast</button>
+                <button type="button" value="100" class="button" id="brightness-btn">Brightness</button>
+
              </div>
              <div class="range-container">
-              <label for="range-value-display" class="range-value-display label">Range</label>
+              <label for="value-range" id="range-value-display" class="range-value-display label">Range</label>
               <input type="range" id="value-range" min="0" max="100" value="10">
             </div>
            </div>
@@ -54,12 +57,12 @@
              <div class="grid">
                 <input type="button" class="button" value="0deg" id="normal-rotate">
                 <input type="button" class="button" value="90deg" id="half-rotate">
-                <input type="button" class="button"  value="45deg" id="45deg-rotate">
+                <input type="button" class="button"  value="-90deg" id="45deg-rotate">
                 <input type="button" class="button"  value="180deg" id="upside-down">
               </div>
            </div>
            
-          <button class="reset-btn" type="reset">Reset Styles</button>
+          <button class="reset-btn" id="reset-btn" type="reset">Reset Styles</button>
          </div>
         </form>
          
@@ -70,7 +73,7 @@
        <div class="bottom-container">
          <label for="image-input" id="image-input-label"><i class="fa-solid fa-cloud-arrow-up"></i> Upload Image</label>
          <input type="file" id="image-input">
-         <a href="" id="download-link">Download-Image <i class="fa-solid fa-cloud-arrow-down"></i></a>
+         <a href="" download id="download-link">Download-Image <i class="fa-solid fa-cloud-arrow-down"></i></a>
        </div>
        <!-- end -->
     </div>
