@@ -68,6 +68,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  text-align: center;
   background: rgba(255,255,255,0.9);
 }
 .top-container .options-container h2{
@@ -143,7 +144,7 @@ body {
   background-color: rgb(74, 127, 241);
 }
 .top-container .image-container{
-  background-image: url("user.png");
+  background-image: url("notFound.png");
   background-size: cover;
   background-position: center;
   align-items: center;
