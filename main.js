@@ -183,12 +183,7 @@ function downloadImage(){
   downloadImg.href = canvas.toDataURL();
   downloadImg.download = 'image.jpg';
 }
-
 // Upload image 
-imgUploadLabel.addEventListener('click',() => {
-  imgUploadInput.click();
-});
-
 imgUploadInput.addEventListener('click',uploadImage);
 
 // Download Image 
