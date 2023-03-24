@@ -167,21 +167,23 @@ async function downloadImage(){
   
   let { newFilter , newTransform } = changeUserImgStyles();
   context.filter = newFilter;
-  // context.transform('rotate(' + newTransform + ')');
+  context.scale(flipX,flipY);
+  if(rotateValue !== 0){
+    context.rotate(rotateValue * Math.PI / 180);
+  }
   context.translate(canvas.width / 2 , canvas.height / 2);
   context.drawImage(userImg,-canvas.width / 2, -canvas.height / 2, canvas.width ,canvas.height);
 
   document.body.appendChild(canvas);
   canvas.style.display = 'none';
  
-  downloadImg.download = userImg.src;
   downloadImg.href = canvas.toDataURL();
-  
+  downloadImg.download = 'image.jpg';
 }
 
 // Upload image 
 imgUploadLabel.addEventListener('click', () => {
-  // imgUploadInput.click();
+  imgUploadInput.click();
   console.log("Clicked on label");
 });
 
