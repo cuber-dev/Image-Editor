@@ -58,8 +58,17 @@ body {
   margin: 0 1rem 0 0;
 }
 .top-container .options-container.disabled{
+  position: relative;
   pointer-events: none;
-  opacity: 0.5;
+}
+.top-container .options-container.disabled::after{
+  content: "Upload an Image to Start Editing";
+  position: absolute;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(255,255,255,0.9);
 }
 .top-container .options-container h2{
   background: #f1eeee;
