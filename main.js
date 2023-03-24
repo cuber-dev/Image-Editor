@@ -167,7 +167,6 @@ async function downloadImage(){
   context.filter = newFilter;
   context.rotate(newAngle);
   
-  context.translate(canvas.width / 2 , canvas.height / 2);
   context.drawImage(userImg,-canvas.width / 2, -canvas.height / 2, canvas.width ,canvas.height);
 
   document.body.appendChild(canvas);
