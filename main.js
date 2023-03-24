@@ -133,7 +133,7 @@ filterDiv.addEventListener('click',handleFilterOptions);
 // Rotate event listeners 
 rotateDiv.addEventListener('click',handleRotateOptions);
 // Range event 
-range.addEventListener('change',updateFilterValues);
+range.addEventListener('input',updateFilterValues);
 
 resetBtn.addEventListener('click',resetStyles);
 
