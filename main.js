@@ -68,7 +68,6 @@ function handleRotateOptions(e){
     rotateValue += 90;
   }else if(children.id === "flip-x"){
     flipX = flipX === 1 ? -1 : 1 ;
-    console.log("flip-x");
   }else if(children.id === "flip-y"){
     flipY = flipY === 1 ? -1 : 1 ;
   }
@@ -140,7 +139,6 @@ resetBtn.addEventListener('click',(e) => {
 
 function uploadImg(){
   let imgSrc = imgUploadInput.files[0];
-  console.log(imgSrc);
   if(!imgSrc) return '';
 
   userImg.src = URL.createObjectURL(imgSrc);
@@ -185,15 +183,11 @@ async function downloadImage(){
 }
 
 // Upload image 
-imgUploadLabel.addEventListener('click', () => {
+imgUploadLabel.addEventListener('click',() => {
   imgUploadInput.click();
-  console.log("Clicked on label");
 });
 
-imgUploadInput.addEventListener('click',() => {
-  console.log("Clicked on input");
-  uploadImg();
-});
+imgUploadInput.addEventListener('click',uploadImg);
 
 // Download Image 
 downloadImg.addEventListener('click',downloadImage);
@@ -202,4 +196,4 @@ downloadImg.addEventListener('click',downloadImage);
 // Default 
 window.addEventListener('load',() => {
   filterOptions[0].click();
-});
+ });
