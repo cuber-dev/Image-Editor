@@ -1,4 +1,5 @@
 // User image 
+const userImgContainer = document.querySelector('.image-container');
 const userImg = document.querySelector('#user-image');
 
 // Options container 
@@ -8,6 +9,8 @@ const filterDiv = document.querySelector('.filters-container .grid');
 const filterOptions = document.querySelectorAll('.filters-container .grid .button');
 const grayscaleBtn = document.querySelector('#grayscale-btn');
 const saturateBtn = document.querySelector('#saturate-btn');
+const inversionBtn = document.querySelector('#inversion-btn');
+const sepiaBtn = document.querySelector('#sepia-btn');
 const opacityBtn = document.querySelector('#opacity-btn');
 const blurBtn = document.querySelector('#blur-btn');
 const contrastBtn = document.querySelector('#contrast-btn');
@@ -50,7 +53,7 @@ function handleFilterOptions(e){
   filterOptions.forEach((e, i) => {
     if(e.classList.contains('active')) {
       range.value = e.value;
-      rangeDisplay.innerText = range.value + '%';
+      rangeDisplay.innerText = `${e.innerText} - ${range.value}%`;
     }
   });
   
@@ -76,6 +79,7 @@ function updateFilterValues(){
   filterOptions.forEach((e, i) => {
     if (e.classList.contains('active')) {
       e.value = range.value;
+      rangeDisplay.innerText = `${e.innerText} - ${range.value}%`;
     }
   });
   changeUserImgStyles();
@@ -83,18 +87,18 @@ function updateFilterValues(){
 
 // For changing user image styles
 function changeUserImgStyles(){
-  let opacityValue = (opacityBtn.value / 100);
-  let newFilter = `grayscale(${grayscaleBtn.value}%)
-                   contrast(${contrastBtn.value}%) 
-                   saturate(${saturateBtn.value}) 
-                   opacity(${opacityValue}) 
+  let newFilter = `contrast(${contrastBtn.value}%) 
+                   saturate(${saturateBtn.value / 100}) 
+                   invert(${inversionBtn.value / 100})
+                   sepia(${sepiaBtn.value / 100})
+                   opacity(${opacityBtn.value / 100}) 
                    blur(${blurBtn.value}px) 
-                   brightness(${brightnessBtn.value}%)`;
+                   brightness(${brightnessBtn.value}%)
+                   grayscale(${grayscaleBtn.value}%)`; 
                    
   let newAngle = rotateValue;
   userImg.style.filter = newFilter;
   userImg.style.rotate = newAngle;
-  
   return { newFilter , newAngle };
 }
 
@@ -105,15 +109,14 @@ filterDiv.addEventListener('click',handleFilterOptions);
 // Rotate event listeners 
 rotateDiv.addEventListener('click',handleRotateOptions);
 // Range event 
-range.addEventListener('change',() => {
-  rangeDisplay.innerText = range.value + '%';
-  updateFilterValues();
-});
+range.addEventListener('change',updateFilterValues);
 
 resetBtn.addEventListener('click',(e) => {
   e.preventDefault();
   grayscaleBtn.value = 0;
   saturateBtn.value = 0;
+  inversionBtn.value = 0;
+  sepiaBtn.value = 0;
   opacityBtn.value = 100;
   blurBtn.value = 0;
   contrastBtn.value = 100;
@@ -137,14 +140,23 @@ resetBtn.addEventListener('click',(e) => {
 function uploadImg(){
   let imgSrc = imgUploadInput.files[0];
   if(!imgSrc) return '';
+
   userImg.src = URL.createObjectURL(imgSrc);
-  optionsContainer.classList.remove('disabled');
-  downloadImg.classList.remove('disabled');
   
-  document.remove('canvas');
+  userImg.addEventListener('load',() => {
+    userImg.classList.add('loaded');
+    userImgContainer.style.backgroundImage = 'none';
+    optionsContainer.classList.remove('disabled');
+    downloadImg.classList.remove('disabled');
+  });
+  
 }
 
 async function downloadImage(){
+  if(document.body.children.contains('canvas')){
+    document.body.removeChild('canvas');
+  }
+  
   const canvas = document.createElement('canvas');
   const context = canvas.getContext('2d');
   
