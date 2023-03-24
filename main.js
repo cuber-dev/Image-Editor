@@ -57,7 +57,7 @@ function handleFilterOptions(e){
     }
   });
   
-  changeUserImgStyles();
+  updateUserImgStyles();
 }
 
 function handleRotateOptions(e){
@@ -72,7 +72,7 @@ function handleRotateOptions(e){
     flipY = flipY === 1 ? -1 : 1 ;
   }
 
-  changeUserImgStyles();
+  updateUserImgStyles();
 }
 
 function updateFilterValues(){
@@ -82,11 +82,34 @@ function updateFilterValues(){
       rangeDisplay.innerText = `${e.innerText} - ${range.value}%`;
     }
   });
-  changeUserImgStyles();
+  updateUserImgStyles();
+}
+
+function resetStyles(e){
+  e.preventDefault();
+  grayscaleBtn.value = 0;
+  saturateBtn.value = 100;
+  inversionBtn.value = 0;
+  sepiaBtn.value = 0;
+  opacityBtn.value = 100;
+  blurBtn.value = 0;
+  contrastBtn.value = 100;
+  brightnessBtn.value = 100;
+  
+
+  rotateValue = 0,flipX = 1,flipY = 1;
+
+  filterOptions.forEach((e, i) => {
+      e.classList.remove("active");
+  });
+
+  filterOptions[0].click();
+  updateFilterValues();
+  updateUserImgStyles();
 }
 
 // For changing user image styles
-function changeUserImgStyles(){
+function updateUserImgStyles(){
   let newFilter = `contrast(${contrastBtn.value}%) 
                    saturate(${saturateBtn.value / 100}) 
                    invert(${inversionBtn.value / 100})
@@ -112,32 +135,11 @@ rotateDiv.addEventListener('click',handleRotateOptions);
 // Range event 
 range.addEventListener('change',updateFilterValues);
 
-resetBtn.addEventListener('click',(e) => {
-  e.preventDefault();
-  grayscaleBtn.value = 0;
-  saturateBtn.value = 100;
-  inversionBtn.value = 0;
-  sepiaBtn.value = 0;
-  opacityBtn.value = 100;
-  blurBtn.value = 0;
-  contrastBtn.value = 100;
-  brightnessBtn.value = 100;
-  
-
-  rotateValue = 0,flipX = 1,flipY = 1;
-
-  filterOptions.forEach((e, i) => {
-      e.classList.remove("active");
-  });
-
-  filterOptions[0].click();
-  updateFilterValues();
-  changeUserImgStyles();
-});
+resetBtn.addEventListener('click',resetStyles);
 
 
 
-function uploadImg(){
+function uploadImage(){
   let imgSrc = imgUploadInput.files[0];
   if(!imgSrc) return '';
 
@@ -152,7 +154,7 @@ function uploadImg(){
   
 }
 
-async function downloadImage(){
+function downloadImage(){
   
   if (document.querySelector('body canvas')) {
     const canvasElement = document.querySelector('body canvas');
@@ -165,7 +167,7 @@ async function downloadImage(){
   canvas.width = userImg.naturalWidth;
   canvas.height = userImg.naturalHeight;
   
-  let newFilter  = changeUserImgStyles();
+  let newFilter  = updateUserImgStyles();
   context.filter = newFilter;
   context.translate(canvas.width / 2 , canvas.height / 2);
   if(rotateValue !== 0){
@@ -187,7 +189,7 @@ imgUploadLabel.addEventListener('click',() => {
   imgUploadInput.click();
 });
 
-imgUploadInput.addEventListener('click',uploadImg);
+imgUploadInput.addEventListener('click',uploadImage);
 
 // Download Image 
 downloadImg.addEventListener('click',downloadImage);
@@ -196,4 +198,4 @@ downloadImg.addEventListener('click',downloadImage);
 // Default 
 window.addEventListener('load',() => {
   filterOptions[0].click();
- });
+});
