@@ -34,7 +34,7 @@ const imgUploadInput = document.querySelector('#image-input');
 const downloadImg = document.querySelector('#download-link');
 
 // Global value
-let rotateValue = 0;
+let rotateValue = 0,flipX = 1,flipY = 1;
 
 function handleFilterOptions(e){
   let children = e.target;
@@ -66,7 +66,13 @@ function handleRotateOptions(e){
     rotateValue -= 90;
   }else if(children.id === "right-rotate"){
     rotateValue += 90;
+  }else if(children.id === "flip-x"){
+    flipX = flipX === 1 ? -1 : 1 ;
+    console.log("flip-x");
+  }else if(children.id === "flip-y"){
+    flipY = flipY === 1 ? -1 : 1 ;
   }
+
   changeUserImgStyles();
 }
 
@@ -91,8 +97,7 @@ function changeUserImgStyles(){
                    brightness(${brightnessBtn.value}%)
                    grayscale(${grayscaleBtn.value}%)`; 
                    
-  let newTransform = `rotate(${rotateValue}deg)`;
-
+  let newTransform = `rotate(${rotateValue}deg) scale(${flipX},${flipY})`;
   userImg.style.filter = newFilter;
   userImg.style.transform = newTransform;
 
@@ -119,15 +124,16 @@ resetBtn.addEventListener('click',(e) => {
   contrastBtn.value = 100;
   brightnessBtn.value = 100;
   
+
+  rotateValue = 0,flipX = 1,flipY = 1;
+
   filterOptions.forEach((e, i) => {
       e.classList.remove("active");
   });
-  rotateOptions.forEach((e, i) => {
-      e.classList.remove("active");
-  });
-  
+
   filterOptions[0].click();
   updateFilterValues();
+  changeUserImgStyles();
 });
 
 
@@ -191,5 +197,4 @@ downloadImg.addEventListener('click',downloadImage);
 // Default 
 window.addEventListener('load',() => {
   filterOptions[0].click();
-  rotateOptions[0].click();
 });
