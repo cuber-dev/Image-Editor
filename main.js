@@ -34,7 +34,7 @@ const imgUploadInput = document.querySelector('#image-input');
 const downloadImg = document.querySelector('#download-link');
 
 // Global value
-let rotateValue = '0deg';
+let rotateValue = 0;
 
 function handleFilterOptions(e){
   let children = e.target;
@@ -62,15 +62,10 @@ function handleFilterOptions(e){
 
 function handleRotateOptions(e){
   let children = e.target;
-  if(children.matches('button')) {
-    rotateValue = children.value;
-    rotateOptions.forEach((e, i) => {
-      if (e === children) {
-        e.classList.add("active");
-      } else {
-        e.classList.remove("active");
-      }
-    });
+  if(children.id === "left-rotate"){
+    rotateValue -= 90;
+  }else if(children.id === "right-rotate"){
+    rotateValue += 90;
   }
   changeUserImgStyles();
 }
@@ -96,10 +91,12 @@ function changeUserImgStyles(){
                    brightness(${brightnessBtn.value}%)
                    grayscale(${grayscaleBtn.value}%)`; 
                    
-  let newAngle = rotateValue;
+  let newTransform = `rotate(${rotateValue}deg)`;
+
   userImg.style.filter = newFilter;
-  userImg.style.rotate = newAngle;
-  return { newFilter , newAngle };
+  userImg.style.transform = newTransform;
+
+  return { newFilter , newTransform };
 }
 
 
@@ -130,8 +127,6 @@ resetBtn.addEventListener('click',(e) => {
   });
   
   filterOptions[0].click();
-  rotateOptions[0].click();
-  
   updateFilterValues();
 });
 
@@ -164,9 +159,9 @@ async function downloadImage(){
   canvas.width = userImg.naturalWidth;
   canvas.height = userImg.naturalHeight;
   
-  let { newFilter , newAngle } = changeUserImgStyles();
+  let { newFilter , newTransform } = changeUserImgStyles();
   context.filter = newFilter;
-  // context.transform('rotate(' + newAngle + ')');
+  // context.transform('rotate(' + newTransform + ')');
   context.translate(canvas.width / 2 , canvas.height / 2);
   context.drawImage(userImg,-canvas.width / 2, -canvas.height / 2, canvas.width ,canvas.height);
 
