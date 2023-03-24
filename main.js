@@ -155,10 +155,12 @@ function uploadImg(){
 }
 
 async function downloadImage(){
-  // if(document.body.children.contains('canvas')){
-  //   document.body.removeChild('canvas');
-  // }
   
+  if (document.querySelector('body canvas')) {
+    const canvasElement = document.querySelector('body canvas');
+    document.body.removeChild(canvasElement);
+  }
+
   const canvas = document.createElement('canvas');
   const context = canvas.getContext('2d');
   
@@ -167,11 +169,12 @@ async function downloadImage(){
   
   let { newFilter , newTransform } = changeUserImgStyles();
   context.filter = newFilter;
-  context.scale(flipX,flipY);
+  context.translate(canvas.width / 2 , canvas.height / 2);
   if(rotateValue !== 0){
     context.rotate(rotateValue * Math.PI / 180);
   }
-  context.translate(canvas.width / 2 , canvas.height / 2);
+  context.scale(flipX,flipY);
+  
   context.drawImage(userImg,-canvas.width / 2, -canvas.height / 2, canvas.width ,canvas.height);
 
   document.body.appendChild(canvas);
