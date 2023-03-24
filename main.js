@@ -101,7 +101,7 @@ function changeUserImgStyles(){
   userImg.style.filter = newFilter;
   userImg.style.transform = newTransform;
 
-  return { newFilter , newTransform };
+  return newFilter ;
 }
 
 
@@ -167,7 +167,7 @@ async function downloadImage(){
   canvas.width = userImg.naturalWidth;
   canvas.height = userImg.naturalHeight;
   
-  let { newFilter , newTransform } = changeUserImgStyles();
+  let newFilter  = changeUserImgStyles();
   context.filter = newFilter;
   context.translate(canvas.width / 2 , canvas.height / 2);
   if(rotateValue !== 0){
