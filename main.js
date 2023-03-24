@@ -184,7 +184,7 @@ function downloadImage(){
   downloadImg.download = 'image.jpg';
 }
 // Upload image 
-imgUploadInput.addEventListener('click',uploadImage);
+imgUploadInput.addEventListener('change',uploadImage);
 
 // Download Image 
 downloadImg.addEventListener('click',downloadImage);
