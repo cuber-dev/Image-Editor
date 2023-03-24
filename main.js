@@ -62,7 +62,7 @@ function handleFilterOptions(e){
 
 function handleRotateOptions(e){
   let children = e.target;
-  if (children.matches('button')) {
+  if(children.matches('button')) {
     rotateValue = children.value;
     rotateOptions.forEach((e, i) => {
       if (e === children) {
@@ -114,7 +114,7 @@ range.addEventListener('change',updateFilterValues);
 resetBtn.addEventListener('click',(e) => {
   e.preventDefault();
   grayscaleBtn.value = 0;
-  saturateBtn.value = 0;
+  saturateBtn.value = 100;
   inversionBtn.value = 0;
   sepiaBtn.value = 0;
   opacityBtn.value = 100;
@@ -139,6 +139,7 @@ resetBtn.addEventListener('click',(e) => {
 
 function uploadImg(){
   let imgSrc = imgUploadInput.files[0];
+  console.log(imgSrc);
   if(!imgSrc) return '';
 
   userImg.src = URL.createObjectURL(imgSrc);
@@ -153,9 +154,9 @@ function uploadImg(){
 }
 
 async function downloadImage(){
-  if(document.body.children.contains('canvas')){
-    document.body.removeChild('canvas');
-  }
+  // if(document.body.children.contains('canvas')){
+  //   document.body.removeChild('canvas');
+  // }
   
   const canvas = document.createElement('canvas');
   const context = canvas.getContext('2d');
@@ -165,24 +166,28 @@ async function downloadImage(){
   
   let { newFilter , newAngle } = changeUserImgStyles();
   context.filter = newFilter;
-  context.rotate(newAngle);
-  
+  // context.transform('rotate(' + newAngle + ')');
+  context.translate(canvas.width / 2 , canvas.height / 2);
   context.drawImage(userImg,-canvas.width / 2, -canvas.height / 2, canvas.width ,canvas.height);
 
   document.body.appendChild(canvas);
   canvas.style.display = 'none';
  
-  downloadImg.download = `${userImg.src}01.jpg`;
+  downloadImg.download = userImg.src;
   downloadImg.href = canvas.toDataURL();
   
 }
 
 // Upload image 
 imgUploadLabel.addEventListener('click', () => {
-  imgUploadInput.click();
+  // imgUploadInput.click();
+  console.log("Clicked on label");
 });
 
-imgUploadInput.addEventListener('click',uploadImg);
+imgUploadInput.addEventListener('click',() => {
+  console.log("Clicked on input");
+  uploadImg();
+});
 
 // Download Image 
 downloadImg.addEventListener('click',downloadImage);

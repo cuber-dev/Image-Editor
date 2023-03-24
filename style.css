@@ -119,6 +119,9 @@ body {
   cursor: pointer;
   background: none;
 }
+.top-container .options-container .rotate-container .button i{
+  pointer-events:none;
+}
 .top-container .options-container .rotate-container .button.active{
   background: var(--theme-3);
 }
@@ -137,11 +140,12 @@ body {
   background-image: url("user.png");
   background-size: cover;
   background-position: center;
-   align-items: center;
+  align-items: center;
   width: 400px;
   min-height: 350px;
   max-height: 100%;
   margin: 1rem 0;
+  overflow: scroll;
 }
 
 .top-container .image-container img{
