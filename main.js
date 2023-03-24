@@ -1,6 +1,8 @@
 // User image 
 const userImg = document.querySelector('#user-image');
 
+// Options container 
+const optionsContainer = document.querySelector('.options-container')
 // Filter elements 
 const filterDiv = document.querySelector('.filters-container .grid');
 const filterOptions = document.querySelectorAll('.filters-container .grid .button');
@@ -33,18 +35,20 @@ let rotateValue = '0deg';
 
 function handleFilterOptions(e){
   let children = e.target;
-    filterStyle = children.value;
-    filterOptions.forEach((e, i) => {
-      if(e === children){
-        e.classList.add("active");
-      }
-      else{
-        e.classList.remove("active");
-      }
-    });
+    if(children.matches('button')){
+      filterOptions.forEach((e, i) => {
+        if(e === children){
+          e.classList.add("active");
+        }
+        else{
+          e.classList.remove("active");
+        }
+      });
+    }
+
   // update range value 
   filterOptions.forEach((e, i) => {
-    if (e.classList.contains('active')) {
+    if(e.classList.contains('active')) {
       range.value = e.value;
       rangeDisplay.innerText = range.value + '%';
     }
@@ -55,7 +59,7 @@ function handleFilterOptions(e){
 
 function handleRotateOptions(e){
   let children = e.target;
-  if (children.matches('input')) {
+  if (children.matches('button')) {
     rotateValue = children.value;
     rotateOptions.forEach((e, i) => {
       if (e === children) {
@@ -74,43 +78,26 @@ function updateFilterValues(){
       e.value = range.value;
     }
   });
+  changeUserImgStyles();
 }
 
 // For changing user image styles
 function changeUserImgStyles(){
+  let opacityValue = (opacityBtn.value / 100);
   let newFilter = `grayscale(${grayscaleBtn.value}%)
                    contrast(${contrastBtn.value}%) 
                    saturate(${saturateBtn.value}) 
-                   opacity(${opacityBtn.value}) 
+                   opacity(${opacityValue}) 
                    blur(${blurBtn.value}px) 
                    brightness(${brightnessBtn.value}%)`;
                    
   let newAngle = rotateValue;
   userImg.style.filter = newFilter;
   userImg.style.rotate = newAngle;
+  
+  return { newFilter , newAngle };
 }
 
-
-
-// Upload image 
-imgUploadLabel.addEventListener('click',() => {
-  imgUploadInput.click();
-});
-
-imgUploadInput.addEventListener('click',uploadImg);
-
-function uploadImg(){
-  let imgSrc = imgUploadInput.files[0];
-  userImg.src = URL.createObjectURL(imgSrc);
-}
-
-// Download Image 
-downloadImg.addEventListener('click',downloadImage);
-
-function downloadImage(){
-  let imgSrc = userImg.src;
-  downloadImg.href = URL.createObjectURL(imgSrc);
-}
 
 // Filter option event
 filterDiv.addEventListener('click',handleFilterOptions);
@@ -121,13 +108,77 @@ rotateDiv.addEventListener('click',handleRotateOptions);
 range.addEventListener('change',() => {
   rangeDisplay.innerText = range.value + '%';
   updateFilterValues();
-  changeUserImgStyles();
 });
+
+resetBtn.addEventListener('click',(e) => {
+  e.preventDefault();
+  grayscaleBtn.value = 0;
+  saturateBtn.value = 0;
+  opacityBtn.value = 100;
+  blurBtn.value = 0;
+  contrastBtn.value = 100;
+  brightnessBtn.value = 100;
+  
+  filterOptions.forEach((e, i) => {
+      e.classList.remove("active");
+  });
+  rotateOptions.forEach((e, i) => {
+      e.classList.remove("active");
+  });
+  
+  filterOptions[0].click();
+  rotateOptions[0].click();
+  
+  updateFilterValues();
+});
+
+
+
+function uploadImg(){
+  let imgSrc = imgUploadInput.files[0];
+  if(!imgSrc) return '';
+  userImg.src = URL.createObjectURL(imgSrc);
+  optionsContainer.classList.remove('disabled');
+  downloadImg.classList.remove('disabled');
+  
+  document.remove('canvas');
+}
+
+async function downloadImage(){
+  const canvas = document.createElement('canvas');
+  const context = canvas.getContext('2d');
+  
+  canvas.width = userImg.naturalWidth;
+  canvas.height = userImg.naturalHeight;
+  
+  let { newFilter , newAngle } = changeUserImgStyles();
+  context.filter = newFilter;
+  context.rotate(newAngle);
+  
+  context.translate(canvas.width / 2 , canvas.height / 2);
+  context.drawImage(userImg,-canvas.width / 2, -canvas.height / 2, canvas.width ,canvas.height);
+
+  document.body.appendChild(canvas);
+  canvas.style.display = 'none';
+ 
+  downloadImg.download = `${userImg.src}01.jpg`;
+  downloadImg.href = canvas.toDataURL();
+  
+}
+
+// Upload image 
+imgUploadLabel.addEventListener('click', () => {
+  imgUploadInput.click();
+});
+
+imgUploadInput.addEventListener('click',uploadImg);
+
+// Download Image 
+downloadImg.addEventListener('click',downloadImage);
 
 
 // Default 
 window.addEventListener('load',() => {
-  changeUserImgStyles();
-  filterOptions[0].classList.add("active");
-  rotateOptions[0].classList.add("active");
+  filterOptions[0].click();
+  rotateOptions[0].click();
 });

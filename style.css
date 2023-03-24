@@ -57,6 +57,10 @@ body {
   border: 1px solid var(--theme-3);
   margin: 0 1rem 0 0;
 }
+.top-container .options-container.disabled{
+  pointer-events: none;
+  opacity: 0.5;
+}
 .top-container .options-container h2{
   background: #f1eeee;
   width:100%;
@@ -111,7 +115,7 @@ body {
 .top-container .options-container .rotate-container .button{
   border: .5px solid var(--theme-2);
   border-radius: 5px;
-  padding: .4rem ;
+  padding: 1rem ;
   cursor: pointer;
   background: none;
 }
@@ -141,12 +145,6 @@ body {
   width: 100%;
   display: block;
 }
-
-
-
-
-
-
 
 
 .whole-container .bottom-container{
@@ -182,6 +180,10 @@ body {
   margin-left: 1rem;
   width: 170px;
   text-align: center;
+}
+.whole-container .bottom-container #download-link.disabled{
+  pointer-events: none;
+  opacity: 0.5;
 }
 .whole-container .bottom-container #download-link:active{
   color: white;

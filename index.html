@@ -30,7 +30,7 @@
           </div>
           <form action="">
 
-         <div class="options-container">
+         <div class="options-container disabled">
           <h2>Options</h2>
            <div class="filters-container">
              <label for="" class="label">Filters</label>
@@ -44,8 +44,8 @@
 
              </div>
              <div class="range-container">
-              <label for="value-range" id="range-value-display" class="range-value-display label">Range</label>
-              <input type="range" id="value-range" min="0" max="100" value="10">
+              <label for="value-range" id="range-value-display" class="range-value-display label">10%</label>
+              <input type="range" id="value-range" min="0" max="100" value="0">
             </div>
            </div>
 
@@ -55,10 +55,10 @@
            <div class="rotate-container">
              <label for="" class="label">Rotatations</label>
              <div class="grid">
-                <input type="button" class="button" value="0deg" id="normal-rotate">
-                <input type="button" class="button" value="90deg" id="half-rotate">
-                <input type="button" class="button"  value="-90deg" id="45deg-rotate">
-                <input type="button" class="button"  value="180deg" id="upside-down">
+                <button type="button" class="button" value="0deg" id="normal-rotate"><i class="fa-solid fa-circle"></i></button>
+                <button type="button" class="button" value="90deg" id="half-rotate"><i class="fa-sharp fa-solid fa-rotate-right"></i></button>
+                <button type="button" class="button"  value="-90deg" id="45deg-rotate"><i class="fa-sharp fa-solid fa-rotate-left"></i></button>
+                <button type="button" class="button"  value="180deg" id="upside-down"><i class="fa-sharp fa-solid fa-arrows-rotate"></i></button>
               </div>
            </div>
            
@@ -73,7 +73,7 @@
        <div class="bottom-container">
          <label for="image-input" id="image-input-label"><i class="fa-solid fa-cloud-arrow-up"></i> Upload Image</label>
          <input type="file" id="image-input">
-         <a href="" download id="download-link">Download-Image <i class="fa-solid fa-cloud-arrow-down"></i></a>
+         <a href="#" download class="disabled" id="download-link">Download-Image <i class="fa-solid fa-cloud-arrow-down"></i></a>
        </div>
        <!-- end -->
     </div>
